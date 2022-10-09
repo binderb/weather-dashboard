@@ -1,0 +1,59 @@
+:root {
+  --grad-top: #88d5fe;
+  --grad-bottom: #83ffcd;
+  --highlight: #83ffcd;
+  --dark: #33323d;
+  --dark-mask: #33323d44;
+  --dark-mask-clear: #33323d00;
+  --glass-thick: #FFFFFF55;
+  --glass-thin: #FFFFFF22;
+}
+
+/*--------------------------------
+General Styles
+------------------------------- */
+
+/* body {
+  height: 100%;
+  font-family: 'Open Sans', Verdana, sans-serif;
+  color: var(--dark);
+  background: linear-gradient(var(--grad-top),var(--grad-bottom));
+} */
+
+table {
+  border-collapse: separate;
+}
+
+#current_conditions tbody tr td {
+  background-color: var(--glass-thin);
+  padding: 10px;
+  border-collapse: separate;
+  border-radius: 0px 10px 10px 0px;
+}
+
+#current_conditions tbody tr td:first-child {
+  border-radius: 10px 0px 0px 10px;
+}
+
+.forecast_card {
+  background-color: var(--glass-thin);
+  font-size: 14px;
+}
+
+.forecast_card div {
+  text-align: center;
+  font-weight: 300;
+}
+
+.forecast_temp, .forecast_ws, .forecast_hum {
+  font-weight: 900;
+  color:white;
+}
+
+/*--------------------------------
+Bootstrap Overrides
+------------------------------- */
+
+.rounded {
+  border-radius: 20px !important;
+}

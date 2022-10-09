@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  />
+  <script
+    src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+    crossorigin="anonymous">
+  </script>
+  <link
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+    crossorigin="anonymous"
+  >
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script type="text/javascript" src="./assets/js/script.js"></script>
+  <title>Weather Dashboard</title>
+</head>
+<body class="bg-dark">
+  <nav class="navbar navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Weather Dashboard</a>
+  </nav>
+  <main class="container-fluid container-dark bg-dark">
+    <section class="row">
+      <!-- Search form elements -->
+      <aside id="search" class="col-12 col-md-3 pt-3">
+        <form id="search_form" class="bg-dark p-3 border text-light rounded">
+          <div class="form-group">
+            <label for="search_field">Search for a city:</label>
+            <input type="text" class="form-control" id="search_field" placeholder="Enter a city here...">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </aside>
+      <!-- Forecast elements -->
+      <section class="col-12 col-md-9 pt-3" id="forecast_panel" style="display:none;">
+        <!-- Current Conditions -->
+        <section id="current" class="jumbotron jumbotron-fluid bg-dark border p-3 mb-3 text-light rounded">
+          <div class="container-fluid">
+            <div class="row justify-content-between">
+              <div id="city_date_info">
+                <h2 id="city_name">Minneapolis, MN</h2>
+                <p id="current_date">Saturday, October 8th, 2022</p>
+              </div>
+              <div id="current_icon">
+                <i class="fas fa-sun fa-3x"></i>
+              </div>
+            </div>
+            <div class="row">
+              <table id="current_conditions">
+                <tbody>
+                  <tr>
+                    <td><b>Temp:</b></td>
+                    <td id="current_temp"></td>
+                  </tr>
+                  <tr>
+                    <td><b>Wind Speed:</b></td>
+                    <td id="current_ws"></td>
+                  </tr>
+                  <tr>
+                    <td><b>Humidity:</b></td>
+                    <td id="current_hum"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+        <!-- 5-day Forecast -->
+        <section id="forecast" class="jumbotron jumbotron-fluid bg-dark border p-3 mb-3 text-light rounded">
+          <div class="container-fluid">
+            <div class="row">
+              <h2>5-Day Forecast</h2>
+            </div>
+            <div class="row">
+              <div id="day_1" class="card col-12 col-sm text-white border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
+                <div class="p-1 forecast_date">8/9/22</div>
+                <i class="fas fa-sun fa-3x p-1 forecast_icon"></i>
+                <div class="p-1">Temp:<br/><span class="forecast_temp">74°F</span></div>
+                <div class="p-1">Wind Speed:<br/><span class="forecast_ws">5 kts</span></div>
+                <div class="p-1">Humidity:<br/><span class="forecast_hum">67%</span></div>
+              </div>
+              <div id="day_2" class="card col-12 col-sm text-white border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
+                <div class="p-1 forecast_date">8/9/22</div>
+                <i class="fas fa-sun fa-3x p-1 forecast_icon"></i>
+                <div class="p-1">Temp:<br/><span class="forecast_temp">74°F</span></div>
+                <div class="p-1">Wind Speed:<br/><span class="forecast_ws">5 kts</span></div>
+                <div class="p-1">Humidity:<br/><span class="forecast_hum">67%</span></div>
+              </div>
+              <div id="day_3" class="card col-12 col-sm text-white border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
+                <div class="p-1 forecast_date">8/9/22</div>
+                <i class="fas fa-sun fa-3x p-1 forecast_icon"></i>
+                <div class="p-1">Temp:<br/><span class="forecast_temp">74°F</span></div>
+                <div class="p-1">Wind Speed:<br/><span class="forecast_ws">5 kts</span></div>
+                <div class="p-1">Humidity:<br/><span class="forecast_hum">67%</span></div>
+              </div>
+              <div id="day_4" class="card col-12 col-sm text-white border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
+                <div class="p-1 forecast_date">8/9/22</div>
+                <i class="fas fa-sun fa-3x p-1 forecast_icon"></i>
+                <div class="p-1">Temp:<br/><span class="forecast_temp">74°F</span></div>
+                <div class="p-1">Wind Speed:<br/><span class="forecast_ws">5 kts</span></div>
+                <div class="p-1">Humidity:<br/><span class="forecast_hum">67%</span></div>
+              </div>
+              <div id="day_5" class="card col-12 col-sm text-white border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
+                <div class="p-1 forecast_date">8/9/22</div>
+                <i class="fas fa-sun fa-3x p-1 forecast_icon"></i>
+                <div class="p-1">Temp:<br/><span class="forecast_temp">74°F</span></div>
+                <div class="p-1">Wind Speed:<br/><span class="forecast_ws">5 kts</span></div>
+                <div class="p-1">Humidity:<br/><span class="forecast_hum">67%</span></div>
+              </div>
+          </div>
+        </section>
+      </section>
+      <!-- Initial Prompt -->
+      <section class="col-12 col-md-9 p-4 m-0 text-white text-center d-flex align-items-center" id="initial_prompt">
+        <h4 class="font-weight-light">Search for a city, or select a recent search to view the forecast.</h4>
+      </section>
+    </section>
+  </main>
+</body>
+</html>
