@@ -14,15 +14,14 @@
     integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
     crossorigin="anonymous">
   </script>
-  <link
-    rel="stylesheet"
-    href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-    crossorigin="anonymous"
-  >
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"
+  ></script>
+  <link href="https://use.fontawesome.com/releases/v6.2.0/css/all.css" rel="stylesheet">
+
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./assets/css/style.css">
-  <script type="text/javascript" src="./assets/js/script.js"></script>
   <title>Weather Dashboard</title>
 </head>
 <body class="bg-dark">
@@ -42,32 +41,33 @@
         </form>
       </aside>
       <!-- Forecast elements -->
-      <section class="col-12 col-md-9 pt-3" id="forecast_panel" style="display:none;">
+      <section class="col-12 col-md-9 pt-3" id="forecast_panel">
         <!-- Current Conditions -->
-        <section id="current" class="jumbotron jumbotron-fluid bg-dark border p-3 mb-3 text-light rounded">
+        <section id="current" style="display:none;" class="jumbotron jumbotron-fluid bg-dark border p-3 mb-3 text-light rounded">
           <div class="container-fluid">
             <div class="row justify-content-between">
-              <div id="city_date_info">
+              <div id="current_info">
                 <h2 id="city_name">Minneapolis, MN</h2>
                 <p id="current_date">Saturday, October 8th, 2022</p>
+                <p id="current_description"></p>
               </div>
               <div id="current_icon">
-                <i class="fas fa-sun fa-3x"></i>
+                <i class="fas fa-sun fa-3x icon_element"></i>
               </div>
             </div>
             <div class="row">
               <table id="current_conditions">
                 <tbody>
                   <tr>
-                    <td><b>Temp:</b></td>
+                    <td>Temp:</td>
                     <td id="current_temp"></td>
                   </tr>
                   <tr>
-                    <td><b>Wind Speed:</b></td>
+                    <td>Wind Speed:</td>
                     <td id="current_ws"></td>
                   </tr>
                   <tr>
-                    <td><b>Humidity:</b></td>
+                    <td>Humidity:</td>
                     <td id="current_hum"></td>
                   </tr>
                 </tbody>
@@ -76,7 +76,7 @@
           </div>
         </section>
         <!-- 5-day Forecast -->
-        <section id="forecast" class="jumbotron jumbotron-fluid bg-dark border p-3 mb-3 text-light rounded">
+        <section id="forecast" style="display:none;" class="jumbotron jumbotron-fluid bg-dark border p-3 mb-3 text-light rounded">
           <div class="container-fluid">
             <div class="row">
               <h2>5-Day Forecast</h2>
@@ -119,12 +119,17 @@
               </div>
           </div>
         </section>
-      </section>
-      <!-- Initial Prompt -->
-      <section class="col-12 col-md-9 p-4 m-0 text-white text-center d-flex align-items-center" id="initial_prompt">
-        <h4 class="font-weight-light">Search for a city, or select a recent search to view the forecast.</h4>
+        <!-- Initial Prompt -->
+        <section id="initial_prompt" class="p-4 m-0 text-white">
+          <h4 class="font-weight-light">Search for a city, or select a recent search to view the forecast.</h4>
+        </section>
+        <!-- Invalid Search Prompt -->
+        <section id="invalid_search_prompt" style="display:none;" class="p-4 m-0 text-white">
+          <h4 class="font-weight-light"><i class="fas fa-exclamation-circle text-danger"></i>&nbsp; Sorry, your city search did not return any results. Please try again.</h4>
+        </section>
       </section>
     </section>
   </main>
 </body>
+<script type="text/javascript" src="./assets/js/script.js"></script>
 </html>
