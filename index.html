@@ -30,17 +30,24 @@
   </nav>
   <main class="container-fluid container-dark bg-dark">
     <section class="row">
-      <!-- Search form elements -->
+      <!-- Search Elements -->
       <aside id="search" class="col-12 col-md-3 pt-3">
-        <form id="search_form" class="bg-dark p-3 border text-light rounded">
+        <!-- Search Form -->
+        <form id="search_form" class="bg-dark p-3 mb-3 border text-light rounded">
           <div class="form-group">
             <label for="search_field">Search for a city:</label>
             <input type="text" class="form-control" id="search_field" placeholder="Enter a city here...">
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        <!-- Recent Searches -->
+        <section id="recent_searches" style="display:none;" class="bg-dark p-3 border text-light rounded">
+          <p>Recent Cities:</p>
+          <div id="recent_list">
+          </div>
+        </section>
       </aside>
-      <!-- Forecast elements -->
+      <!-- Forecast Elements -->
       <section class="col-12 col-md-9 pt-3" id="forecast_panel">
         <!-- Current Conditions -->
         <section id="current" style="display:none;" class="jumbotron jumbotron-fluid bg-dark border p-3 mb-3 text-light rounded">
@@ -82,35 +89,35 @@
               <h2>5-Day Forecast</h2>
             </div>
             <div class="row">
-              <div id="day_1" class="card col-12 col-sm text-white border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
+              <div id="day_1" class="card col-12 col-sm text-light border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
                 <div class="p-1 forecast_date">8/9/22</div>
                 <div class="p-1 forecast_icon_container"><i class="fas fa-sun fa-3x p-1 forecast_icon"></i></div>
                 <div class="p-1">High Temp:<br/><span class="forecast_temp">74°F</span></div>
                 <div class="p-1">Wind Speed:<br/><span class="forecast_ws">5 kts</span></div>
                 <div class="p-1">Humidity:<br/><span class="forecast_hum">67%</span></div>
               </div>
-              <div id="day_2" class="card col-12 col-sm text-white border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
+              <div id="day_2" class="card col-12 col-sm text-light border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
                 <div class="p-1 forecast_date">8/9/22</div>
                 <div class="p-1 forecast_icon_container"><i class="fas fa-sun fa-3x p-1 forecast_icon"></i></div>
                 <div class="p-1">High Temp:<br/><span class="forecast_temp">74°F</span></div>
                 <div class="p-1">Wind Speed:<br/><span class="forecast_ws">5 kts</span></div>
                 <div class="p-1">Humidity:<br/><span class="forecast_hum">67%</span></div>
               </div>
-              <div id="day_3" class="card col-12 col-sm text-white border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
+              <div id="day_3" class="card col-12 col-sm text-light border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
                 <div class="p-1 forecast_date">8/9/22</div>
                 <div class="p-1 forecast_icon_container"><i class="fas fa-sun fa-3x p-1 forecast_icon"></i></div>
                 <div class="p-1">High Temp:<br/><span class="forecast_temp">74°F</span></div>
                 <div class="p-1">Wind Speed:<br/><span class="forecast_ws">5 kts</span></div>
                 <div class="p-1">Humidity:<br/><span class="forecast_hum">67%</span></div>
               </div>
-              <div id="day_4" class="card col-12 col-sm text-white border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
+              <div id="day_4" class="card col-12 col-sm text-light border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
                 <div class="p-1 forecast_date">8/9/22</div>
                 <div class="p-1 forecast_icon_container"><i class="fas fa-sun fa-3x p-1 forecast_icon"></i></div>
                 <div class="p-1">High Temp:<br/><span class="forecast_temp">74°F</span></div>
                 <div class="p-1">Wind Speed:<br/><span class="forecast_ws">5 kts</span></div>
                 <div class="p-1">Humidity:<br/><span class="forecast_hum">67%</span></div>
               </div>
-              <div id="day_5" class="card col-12 col-sm text-white border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
+              <div id="day_5" class="card col-12 col-sm text-light border-0 p-3 mx-0 my-1 m-sm-1 d-flex flex-direction-column justify-content-center align-items-center forecast_card">
                 <div class="p-1 forecast_date">8/9/22</div>
                 <div class="p-1 forecast_icon_container"><i class="fas fa-sun fa-3x p-1 forecast_icon"></i></div>
                 <div class="p-1">High Temp:<br/><span class="forecast_temp">74°F</span></div>
@@ -120,11 +127,11 @@
           </div>
         </section>
         <!-- Initial Prompt -->
-        <section id="initial_prompt" class="p-4 m-0 text-white">
+        <section id="initial_prompt" class="p-4 m-0 text-light">
           <h4 class="font-weight-light">Search for a city, or select a recent search to view the forecast.</h4>
         </section>
         <!-- Invalid Search Prompt -->
-        <section id="invalid_search_prompt" style="display:none;" class="p-4 m-0 text-white">
+        <section id="invalid_search_prompt" style="display:none;" class="p-4 m-0 text-light">
           <h4 class="font-weight-light"><i class="fas fa-exclamation-circle text-danger"></i>&nbsp; Sorry, your city search did not return any results. Please try again.</h4>
         </section>
       </section>
