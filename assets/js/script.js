@@ -24,14 +24,53 @@ var icons = {
 Form Submission
 ------------------------------*/
 
+$( function () {
+  load_recents();
+
+  $('#clear_recents').click(function(e) {
+    e.preventDefault();
+    localStorage.removeItem('recent_cities');
+    load_recents();
+  });
+});
+
+function load_recents () {
+  if (localStorage.getItem('recent_cities')) {
+    window.recent_cities = JSON.parse(localStorage.getItem('recent_cities'));
+    $('#recents_list').empty();
+    if (window.recent_cities.length > 0) {
+      for (var i=0;i<window.recent_cities.length;i++) {
+        $('#recents_list').append('<button class="btn btn-secondary my-1 w-100 recent_button" data-city="'+window.recent_cities[i].search_criteria+'">'+window.recent_cities[i].display_name+'</button>');
+        $('button[data-city="'+window.recent_cities[i].search_criteria+'"]').click( function(e) {
+          e.preventDefault();
+          display_city_data($(this).attr('data-city'));
+        });
+      }
+      $('#no_recents').hide();
+      $('#recents_list').show();
+    } else {
+      $('#recents_list').hide();
+      $('#no_recents').show();
+    }
+  } else {
+    $('#recents_list').empty();
+    $('#recents_list').hide();
+    $('#no_recents').show();
+  }
+}
+
 $('#search_form').submit( function(e) {
   e.preventDefault();
+  let city_name = encodeURI($('#search_field').val().trim());
+  display_city_data(city_name);
+});
+
+function display_city_data (city_name) {
   // First, use the Geocoding API to locate the city
   // that was searched for. We could use the 'q' parameter
   // in the Weather or Forecast API's, but there's a note
   // indicating that this feature has been deprecated.
-  let city_name = encodeURI($('#search_field').val().trim());
-  let city_query = 'https://api.openweathermap.org/geo/1.0/direct?q='+city_name+'&limit=1&appid=9f18efe2cbef009702bff1a605ad69c2';
+  let city_query = 'https://api.openweathermap.org/geo/1.0/direct?q='+city_name+'&limit=10&appid=9f18efe2cbef009702bff1a605ad69c2';
   fetch(city_query)
   .then(function(response) {return response.json()})
   .then(function(city_data) {
@@ -43,6 +82,11 @@ $('#search_form').submit( function(e) {
       fetch(current_query)
       .then(function(response) {return response.json()})
       .then(function(current_weather) {
+        console.log(current_weather);
+        let recent_string = current_weather.name;
+        console.log(city_data[0]);
+        if (city_data[0].hasOwnProperty('state')) recent_string = recent_string + ', '+get_state_code(city_data[0].state);
+
         // Update the current conditions box with info from
         // the API response.
         $('#initial_prompt').hide();
@@ -60,6 +104,29 @@ $('#search_form').submit( function(e) {
         let current_hum = current_weather.main.humidity+'%';
         $('#current_hum').text(current_hum);
         $('#current').show();
+
+        // Add entry to recents list, if there isn't already
+        // a button with the same city name.
+        let found_duplicate = false;
+        $('.recent_button').each( function() {
+          if ($(this).text() == recent_string) found_duplicate = true;
+        });
+        if (!found_duplicate) {
+          console.log('new recent!');
+          let new_recent = {
+            search_criteria: city_name,
+            display_name: recent_string
+          }
+          window.recent_cities = [];
+          if (localStorage.getItem('recent_cities')) window.recent_cities = JSON.parse(localStorage.getItem('recent_cities'));
+          window.recent_cities.push(new_recent);
+          // Only keep the 5 most recent cities to avoid UI clutter.
+          if (window.recent_cities.length > 5) window.recent_cities = window.recent_cities.slice(1);
+          localStorage.setItem('recent_cities',JSON.stringify(window.recent_cities));
+          load_recents();
+        }
+
+        $('#recent_searches').show();
 
       });
       // Also start a fetch request for the 5-day forecast
@@ -95,10 +162,6 @@ $('#search_form').submit( function(e) {
           card_i.find('.forecast_hum').text(hum_i);
         }
         $('#forecast').show();
-        
-        // Add entry to recents list
-        $('#recent_list').append('<button class="btn btn-secondary my-1 w-100 recent_button">'+city_data[0].name+'</button>');
-        $('#recent_searches').show();
       });
     } else {
       // If no city was found by the Geocoding API, display
@@ -110,7 +173,7 @@ $('#search_form').submit( function(e) {
     }
 
   });
-});
+}
 
 
 /*------------------------------
@@ -189,5 +252,112 @@ function get_avg_hum (data, date) {
   }
   avg_hum = avg_hum / filtered_data.length;
   return avg_hum;
+}
+
+function get_state_code (state) {
+  switch (state) {
+    case "Alabama":
+      return "AZ";
+    case "Alaska":
+      return "AK";
+    case "Arizona":
+      return "AZ";
+    case "Arkansas":
+      return "AR";
+    case "California":
+      return "CA";
+    case "Colorado":
+      return "CO";
+    case "Connecticut":
+      return "CT";
+    case "Delaware":
+      return "DE";
+    case "Florida":
+      return "FL";
+    case "Georgia":
+      return "GA";
+    case "Hawaii":
+      return "HI";
+    case "Idaho":
+      return "ID";
+    case "Illinois":
+      return "IL";
+    case "Indiana":
+      return "IN";
+    case "Iowa":
+      return "IA";
+    case "Kansas":
+      return "KS";
+    case "Kentucky":
+      return "KY";
+    case "Louisiana":
+      return "LA";
+    case "Maine":
+      return "ME";
+    case "Maryland":
+      return "MD";
+    case "Massachusetts":
+      return "MA";
+    case "Michigan":
+      return "MI";
+    case "Minnesota":
+      return "MN";
+    case "Mississippi":
+      return "MS";
+    case "Missouri":
+      return "MO";
+    case "Montana":
+      return "MT";
+    case "Nebraska":
+      return "NE";
+    case "Nevada":
+      return "NV";
+    case "New Hampshire":
+      return "NH";
+    case "New Jersey":
+      return "NJ";
+    case "New Mexico":
+      return "NM";
+    case "New York":
+      return "NY";
+    case "North Carolina":
+      return "NC";
+    case "North Dakota":
+      return "ND";
+    case "Ohio":
+      return "OH";
+    case "Oklahoma":
+      return "OK";
+    case "Oregon":
+      return "OR";
+    case "Pennsylvania":
+      return "PA";
+    case "Rhode Island":
+      return "RI";
+    case "South Carolina":
+      return "SC";
+    case "South Dakota":
+      return "SD";
+    case "Tennessee":
+      return "TN";
+    case "Texas":
+      return "TX";
+    case "Utah":
+      return "UT";
+    case "Vermont":
+      return "VT";
+    case "Virginia":
+      return "VA";
+    case "Washington":
+      return "WA";
+    case "West Virginia":
+      return "WV";
+    case "Wisconsin":
+      return "WI";
+    case "Wyoming":
+      return "WY";
+    default:
+      return state;
+  }
 }
 
