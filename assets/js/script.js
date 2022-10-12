@@ -21,9 +21,9 @@ var icons = {
 }
 
 /*------------------------------
-Form Submission
+Page Load
 ------------------------------*/
-
+// Load data from LocalStorage and add event listeners.
 $( function () {
   load_recents();
 
@@ -34,31 +34,9 @@ $( function () {
   });
 });
 
-function load_recents () {
-  if (localStorage.getItem('recent_cities')) {
-    window.recent_cities = JSON.parse(localStorage.getItem('recent_cities'));
-    $('#recents_list').empty();
-    if (window.recent_cities.length > 0) {
-      for (var i=0;i<window.recent_cities.length;i++) {
-        $('#recents_list').append('<button class="btn btn-secondary my-1 w-100 recent_button" data-city="'+window.recent_cities[i].search_criteria+'">'+window.recent_cities[i].display_name+'</button>');
-        $('button[data-city="'+window.recent_cities[i].search_criteria+'"]').click( function(e) {
-          e.preventDefault();
-          display_city_data($(this).attr('data-city'));
-        });
-      }
-      $('#no_recents').hide();
-      $('#recents_list').show();
-    } else {
-      $('#recents_list').hide();
-      $('#no_recents').show();
-    }
-  } else {
-    $('#recents_list').empty();
-    $('#recents_list').hide();
-    $('#no_recents').show();
-  }
-}
-
+/*------------------------------
+Form Submission
+------------------------------*/
 $('#search_form').submit( function(e) {
   e.preventDefault();
   let city_name = encodeURI($('#search_field').val().trim());
@@ -83,15 +61,15 @@ function display_city_data (city_name) {
       .then(function(response) {return response.json()})
       .then(function(current_weather) {
         console.log(current_weather);
-        let recent_string = current_weather.name;
+        let display_string = current_weather.name;
         console.log(city_data[0]);
-        if (city_data[0].hasOwnProperty('state')) recent_string = recent_string + ', '+get_state_code(city_data[0].state);
+        if (city_data[0].hasOwnProperty('state')) display_string = display_string + ', '+get_state_code(city_data[0].state);
 
         // Update the current conditions box with info from
         // the API response.
         $('#initial_prompt').hide();
         $('#invalid_search_prompt').hide();
-        $('#city_name').text(current_weather.name);
+        $('#city_name').text(display_string);
         let current_date = moment().format('dddd, MMMM Do, YYYY');
         $('#current_date').text(current_date);
         $('#current_description').text(current_weather.weather[0].description)
@@ -109,13 +87,13 @@ function display_city_data (city_name) {
         // a button with the same city name.
         let found_duplicate = false;
         $('.recent_button').each( function() {
-          if ($(this).text() == recent_string) found_duplicate = true;
+          if ($(this).text() == display_string) found_duplicate = true;
         });
         if (!found_duplicate) {
           console.log('new recent!');
           let new_recent = {
             search_criteria: city_name,
-            display_name: recent_string
+            display_name: display_string
           }
           window.recent_cities = [];
           if (localStorage.getItem('recent_cities')) window.recent_cities = JSON.parse(localStorage.getItem('recent_cities'));
@@ -230,7 +208,7 @@ function get_max_temp (data, date) {
   return max_temp;
 }
 
-// Function that returns the average predicted wind speed 
+// Helper function that returns the average predicted wind speed 
 // for a given day in the forecast.
 function get_avg_ws (data, date) {
   let filtered_data = data.filter(e => moment(e.dt_txt).day() == date.day());
@@ -242,7 +220,7 @@ function get_avg_ws (data, date) {
   return avg_ws;
 }
 
-// Function that returns the average predicted humidity 
+// Helper function that returns the average predicted humidity 
 // for a given day in the forecast.
 function get_avg_hum (data, date) {
   let filtered_data = data.filter(e => moment(e.dt_txt).day() == date.day());
@@ -254,6 +232,36 @@ function get_avg_hum (data, date) {
   return avg_hum;
 }
 
+// Helper function that generates buttons in the recent cities
+// panel based on the contents of LocalStorage.
+function load_recents () {
+  if (localStorage.getItem('recent_cities')) {
+    window.recent_cities = JSON.parse(localStorage.getItem('recent_cities'));
+    $('#recents_list').empty();
+    if (window.recent_cities.length > 0) {
+      for (var i=0;i<window.recent_cities.length;i++) {
+        $('#recents_list').append('<button class="btn btn-secondary my-1 w-100 recent_button" data-city="'+window.recent_cities[i].search_criteria+'">'+window.recent_cities[i].display_name+'</button>');
+        $('button[data-city="'+window.recent_cities[i].search_criteria+'"]').click( function(e) {
+          e.preventDefault();
+          display_city_data($(this).attr('data-city'));
+        });
+      }
+      $('#no_recents').hide();
+      $('#recents_list').show();
+    } else {
+      $('#recents_list').hide();
+      $('#no_recents').show();
+    }
+  } else {
+    $('#recents_list').empty();
+    $('#recents_list').hide();
+    $('#no_recents').show();
+  }
+}
+
+// Helper function that translates full state names into
+// two-letter state codes for US states. This is purely
+// used for neat formatting of display text.
 function get_state_code (state) {
   switch (state) {
     case "Alabama":

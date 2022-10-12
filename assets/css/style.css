@@ -1,11 +1,4 @@
 :root {
-  --grad-top: #88d5fe;
-  --grad-bottom: #83ffcd;
-  --highlight: #83ffcd;
-  --dark: #33323d;
-  --dark-mask: #33323d44;
-  --dark-mask-clear: #33323d00;
-  --glass-thick: #FFFFFF55;
   --glass-thin: #FFFFFF22;
 }
 
@@ -13,15 +6,16 @@
 General Styles
 ------------------------------- */
 
-/* body {
-  height: 100%;
-  font-family: 'Open Sans', Verdana, sans-serif;
-  color: var(--dark);
-  background: linear-gradient(var(--grad-top),var(--grad-bottom));
-} */
-
 table {
   border-collapse: separate;
+}
+
+/*--------------------------------
+Current Conditions Panel
+------------------------------- */
+
+#current_conditions {
+  width: 100%;
 }
 
 #current_conditions tbody tr td {
@@ -36,6 +30,14 @@ table {
   border-radius: 10px 0px 0px 10px;
   font-weight: 300;
 }
+
+#current_info p {
+  text-transform:capitalize;
+}
+
+/*--------------------------------
+5-Day Forecast
+------------------------------- */
 
 .forecast_card {
   background-color: var(--glass-thin);
@@ -52,14 +54,13 @@ table {
   color:white;
 }
 
-#current_info p {
-  text-transform:capitalize;
-}
+/*--------------------------------
+Recent Cities Panel
+------------------------------- */
 
 .recent_button {
   background-color: var(--glass-thin);
   border: 0;
-  text-transform: capitalize;
 }
 
 /*--------------------------------
